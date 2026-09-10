@@ -1,0 +1,7 @@
+{
+  "intervenants": [
+    { "id": "mahir-guven", "nom": "Mahir Guven", "collection": "ecriture", "role": "Romancier, fondateur de l'Atelier", "photo": "", "a_venir": false },
+    { "id": "bientot-idees", "nom": "Bientôt", "collection": "idees", "role": "Intervenante ou intervenant Idées", "photo": "", "a_venir": true },
+    { "id": "bientot-ecriture", "nom": "Bientôt", "collection": "ecriture", "role": "Autrice ou auteur invité", "photo": "", "a_venir": true }
+  ]
+}

@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>l'Atelier — ateliers en petit groupe, choisis par Mahir Guven</title>
+<meta name="description" content="Ateliers en petit groupe à Montreuil et en ligne, conçus ou choisis par l'écrivain Mahir Guven.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Instrument+Sans:wght@400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <a class="logo" href="/" aria-label="l'Atelier, accueil"><i>l'</i><b>Atelier</b><small id="signature"></small></a>
+  <nav aria-label="Navigation principale">
+    <a href="#agenda">Agenda</a>
+    <a href="#collections">Collections</a>
+    <a href="#intervenants">Intervenants</a>
+    <a href="#consigne" id="nav-consigne">La consigne</a>
+    <a class="btn" href="#agenda">Réserver</a>
+  </nav>
+</header>
+
+<div class="bandeau" aria-hidden="true"><div class="piste" id="piste"></div></div>
+
+<p class="chargement" id="chargement">Chargement…</p>
+
+<main id="contenu" hidden>
+  <div class="hero">
+    <h1 class="gros"><span id="hero-titre"></span> <span class="bleu" id="hero-titre-couleur"></span></h1>
+    <figure class="photo" id="hero-photo"></figure>
+    <div class="sticker" id="sticker"></div>
+    <div class="texte">
+      <p class="chapeau" id="hero-chapeau"></p>
+      <div class="actions-hero">
+        <a class="btn" href="#agenda">Voir l'agenda</a>
+        <a href="#consigne" id="lien-consigne">Recevoir la consigne de la semaine</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="agenda" aria-labelledby="t-agenda">
+    <h2 class="titre-section gros" id="t-agenda">Agenda <span class="it">places limitées</span></h2>
+    <div class="filtres" id="filtres" role="group" aria-label="Filtrer par collection"></div>
+    <div id="liste-sessions"></div>
+    <p class="note-paiement">Paiement sécurisé par Stripe. Confirmation et reçu par e-mail.</p>
+  </section>
+
+  <div class="consigne" id="consigne">
+    <div class="entete">
+      <h2 class="gros">La consigne de la semaine</h2>
+      <span id="consigne-signature"></span>
+    </div>
+    <blockquote id="consigne-texte"></blockquote>
+    <p class="regle" id="consigne-regle"></p>
+    <a class="btn clair" id="consigne-lien" href="#">Recevoir chaque lundi</a>
+  </div>
+
+  <section id="collections" aria-labelledby="t-collections">
+    <h2 class="titre-section gros" id="t-collections">Collections</h2>
+    <div class="collections" id="liste-collections"></div>
+  </section>
+
+  <section id="intervenants" aria-labelledby="t-intervenants">
+    <h2 class="titre-section gros" id="t-intervenants">Intervenants <span class="it">choisis un par un</span></h2>
+    <div class="intervenants" id="liste-intervenants"></div>
+  </section>
+
+  <section id="textes" aria-labelledby="t-textes">
+    <h2 class="titre-section gros" id="t-textes">Ce qui s'écrit <span class="it">ici</span></h2>
+    <div class="textes" id="liste-textes"></div>
+  </section>
+
+  <div class="fondateur" id="fondateur">
+    <div class="grille">
+      <figure class="photo" id="fondateur-photo"></figure>
+      <div class="bio">
+        <div class="sticker" id="fondateur-sticker"></div>
+        <h2 class="titre-section gros">Fondateur</h2>
+        <div id="fondateur-texte"></div>
+        <div class="credits" id="fondateur-credits"></div>
+        <a class="btn clair" id="fondateur-lien" href="#">Son site d'auteur</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="questions" aria-labelledby="t-questions">
+    <h2 class="titre-section gros" id="t-questions">Questions</h2>
+    <div class="faq" id="liste-faq"></div>
+  </section>
+</main>
+
+<footer>
+  <div class="pied">
+    <span>Ateliers en petit groupe à Montreuil et en ligne</span>
+    <nav aria-label="Informations">
+      <a id="pied-email" href="#">Contact</a>
+      <a id="pied-instagram" href="#" hidden>Instagram</a>
+      <a href="page.html?p=mentions-legales">Mentions légales</a>
+      <a href="page.html?p=cgv">CGV</a>
+      <a href="page.html?p=confidentialite">Confidentialité</a>
+    </nav>
+  </div>
+  <div class="geant gros" aria-hidden="true"><i>l'</i>Atelier</div>
+</footer>
+
+<dialog id="fenetre" aria-labelledby="f-titre">
+  <div class="fen">
+    <h3 class="gros" id="f-titre"></h3>
+    <dl id="f-recap"></dl>
+    <p class="petit">Le paiement se fait sur une page sécurisée Stripe. Tu reçois ta confirmation et ton reçu par e-mail.</p>
+    <label><input type="checkbox" id="f-cgv"> <span>J'ai lu et j'accepte les <a href="page.html?p=cgv" target="_blank">conditions générales de vente</a>.</span></label>
+    <div class="actions">
+      <button class="btn" id="f-payer" disabled></button>
+      <button class="fermer" id="f-fermer" type="button">Annuler</button>
+    </div>
+    <div class="demo" id="f-demo" hidden>Le paiement en ligne n'est pas encore ouvert pour cette session. Écris-nous pour réserver.</div>
+  </div>
+</dialog>
+
+<script>
+/* Tout le contenu vient des fichiers du dossier /content,
+   modifiés depuis l'administration (/admin). Rien à changer ici. */
+const $ = id => document.getElementById(id);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const euros = n => Number(n).toLocaleString("fr-FR") + " €";
+
+/* Texte noir ou blanc selon la couleur de la collection */
+function contraste(hex){
+  const h = (hex || "#1432FF").replace("#","");
+  const [r,g,b] = [0,2,4].map(i => parseInt(h.substr(i,2),16) / 255)
+    .map(v => v <= .03928 ? v/12.92 : Math.pow((v+.055)/1.055, 2.4));
+  return (0.2126*r + 0.7152*g + 0.0722*b) > 0.4 ? "#000000" : "#FFFFFF";
+}
+const style = c => `--c:${esc(c?.couleur || "#1432FF")};--t:${contraste(c?.couleur)}`;
+
+function photo(el, src, texte, coul){
+  el.setAttribute("style", style(coul));
+  el.innerHTML = src
+    ? `<img src="${esc(src)}" alt="${esc(texte)}" loading="lazy">`
+    : `<div class="vide">Photo à venir${texte ? " : " + esc(texte) : ""}</div>`;
+}
+const paragraphes = t => String(t || "").split(/\n\s*\n/).map(p => `<p>${esc(p.trim())}</p>`).join("");
+
+async function charger(nom){
+  const r = await fetch(`content/${nom}.json`, {cache: "no-cache"});
+  if (!r.ok) throw new Error(nom);
+  return r.json();
+}
+
+(async () => {
+  let site, collections, intervenants, sessions;
+  try {
+    [site, {collections}, {intervenants}, {sessions}] =
+      await Promise.all(["site","collections","intervenants","sessions"].map(charger));
+  } catch(e) {
+    $("chargement").textContent = "Le contenu n'a pas pu être chargé. Si tu ouvres ce fichier directement depuis ton ordinateur, c'est normal : le site fonctionne une fois en ligne.";
+    return;
+  }
+  const col = id => collections.find(c => c.id === id);
+  const inter = id => intervenants.find(i => i.id === id);
+  const principale = collections[0];
+
+  /* En-tête, bandeau, hero */
+  $("signature").textContent = site.signature || "";
+  $("piste").innerHTML = Array(4).fill(site.bandeau || []).flat().map(t => `<span>${esc(t)}</span>`).join("");
+  $("hero-titre").textContent = site.hero_titre;
+  $("hero-titre-couleur").textContent = site.hero_titre_couleur;
+  $("hero-chapeau").textContent = site.hero_chapeau;
+  photo($("hero-photo"), site.hero_photo, site.hero_photo_legende, principale);
+  $("sticker").textContent = site.sticker || "";
+  $("sticker").hidden = !site.sticker;
+
+  /* Agenda : sessions visibles et non terminées */
+  const auj = new Date(); auj.setHours(0,0,0,0);
+  const actives = sessions
+    .map((s,i) => ({...s, i}))
+    .filter(s => s.visible !== false && (!s.fin || new Date(s.fin + "T23:59:59") >= auj));
+
+  let filtre = "tout";
+  $("filtres").innerHTML =
+    `<button class="filtre" aria-pressed="true" data-f="tout">Tout</button>` +
+    collections.map(c => `<button class="filtre" style="${style(c)}" aria-pressed="false" data-f="${esc(c.id)}"><span class="point"></span>${esc(c.nom)}</button>`).join("");
+  $("filtres").addEventListener("click", e => {
+    const b = e.target.closest(".filtre"); if (!b) return;
+    filtre = b.dataset.f;
+    document.querySelectorAll(".filtre").forEach(x => x.setAttribute("aria-pressed", x === b));
+    rendreSessions();
+  });
+
+  function rendreSessions(){
+    const liste = actives.filter(s => filtre === "tout" || s.collection === filtre);
+    if (!liste.length){
+      const c = col(filtre);
+      $("liste-sessions").innerHTML = `<div class="vide-agenda">Pas encore de session${c ? " dans la collection " + esc(c.nom) : ""}. ${site.consigne_visible ? '<a href="#consigne">Inscris-toi à la consigne</a> pour être prévenu à l\'ouverture.' : ""}</div>`;
+      return;
+    }
+    $("liste-sessions").innerHTML = liste.map(s => {
+      const c = col(s.collection) || principale, p = inter(s.intervenant), complet = s.places <= 0;
+      return `
+      <div class="session${complet ? " complete" : ""}" style="${style(c)}">
+        <div class="dossard" aria-label="${s.places} places restantes">
+          <b>${Number(s.places)}</b><small>${complet ? "place" : (s.places > 1 ? "places restantes" : "place restante")}</small>
+        </div>
+        <div>
+          <span class="tag">${esc(c.nom)}</span>
+          <h3 class="gros">${esc(s.titre)}</h3>
+          ${p ? `<p class="qui"><span class="avatar"></span>avec ${esc(p.nom)}</p>` : ""}
+          <p class="infos">${esc(s.dates)}<br>${esc(s.horaire)}, ${esc(s.lieu)}</p>
+        </div>
+        <div class="droite">
+          <div class="prix">${euros(s.prix)}</div>
+          ${complet
+            ? `<div><span class="tampon">Complet</span></div><a href="mailto:${esc(site.email)}?subject=${encodeURIComponent("Liste d'attente : " + s.titre)}">Liste d'attente</a>`
+            : `<button class="btn" data-i="${s.i}">Réserver ma place</button>`}
+        </div>
+      </div>`;
+    }).join("");
+  }
+  rendreSessions();
+
+  /* Consigne */
+  $("consigne").hidden = !site.consigne_visible;
+  $("nav-consigne").hidden = $("lien-consigne").hidden = !site.consigne_visible;
+  $("consigne-signature").textContent = site.signature || "";
+  $("consigne-texte").textContent = site.consigne_texte;
+  $("consigne-regle").textContent = site.consigne_regle;
+  if (site.consigne_lien_inscription) $("consigne-lien").href = site.consigne_lien_inscription;
+  else $("consigne-lien").hidden = true;
+
+  /* Collections */
+  $("liste-collections").innerHTML = collections.map(c => `
+    <article class="collection" style="${style(c)}">
+      <div class="haut"><span class="statut">${c.ouverte ? "Ouverte" : "Bientôt"}</span><h3 class="gros">${esc(c.nom)}</h3></div>
+      <p>${esc(c.texte)}</p>
+    </article>`).join("");
+
+  /* Intervenants */
+  $("liste-intervenants").innerHTML = intervenants.map((p, k) => `
+    <article class="intervenant${p.a_venir ? " a-venir" : ""}">
+      <figure class="photo" id="ph-${k}"></figure>
+      <h3 class="gros">${esc(p.nom)}</h3>
+      <p>${esc(p.role)}</p>
+    </article>`).join("");
+  intervenants.forEach((p, k) => {
+    const el = $("ph-" + k);
+    if (p.a_venir){ el.innerHTML = `<div class="vide">?</div>`; return; }
+    photo(el, p.photo, p.nom, col(p.collection) || principale);
+  });
+
+  /* Extraits */
+  const textes = site.textes_participants || [];
+  $("textes").hidden = !textes.length;
+  $("liste-textes").innerHTML = textes.map(t => `
+    <div class="extrait"><p>${esc(t.extrait)}</p><small>${esc(t.signature)}</small></div>`).join("");
+
+  /* Fondateur */
+  photo($("fondateur-photo"), site.fondateur_photo, "Mahir Guven", principale);
+  $("fondateur-sticker").textContent = site.fondateur_sticker || "";
+  $("fondateur-sticker").hidden = !site.fondateur_sticker;
+  $("fondateur-texte").innerHTML = paragraphes(site.fondateur_texte);
+  $("fondateur-credits").innerHTML = (site.fondateur_credits || []).map(c => `<span class="pastille">${esc(c)}</span>`).join("");
+  if (site.fondateur_lien) $("fondateur-lien").href = site.fondateur_lien;
+  else $("fondateur-lien").hidden = true;
+
+  /* Questions */
+  $("liste-faq").innerHTML = (site.faq || []).map(q => `
+    <details><summary>${esc(q.question)}</summary><p>${esc(q.reponse)}</p></details>`).join("");
+
+  /* Pied de page */
+  $("pied-email").href = "mailto:" + site.email;
+  $("pied-email").textContent = site.email;
+  if (site.instagram){ $("pied-instagram").href = site.instagram; $("pied-instagram").hidden = false; }
+
+  $("chargement").hidden = true;
+  $("contenu").hidden = false;
+
+  /* Réservation */
+  const fen = $("fenetre"), cgv = $("f-cgv"), payer = $("f-payer"), demo = $("f-demo");
+  let courante = null;
+  $("liste-sessions").addEventListener("click", e => {
+    const b = e.target.closest("button[data-i]"); if (!b) return;
+    courante = sessions[+b.dataset.i];
+    fen.setAttribute("style", style(col(courante.collection) || principale));
+    $("f-titre").textContent = courante.titre;
+    const p = inter(courante.intervenant);
+    $("f-recap").innerHTML = `
+      ${p ? `<dt>Avec</dt><dd>${esc(p.nom)}</dd>` : ""}
+      <dt>Dates</dt><dd>${esc(courante.dates)}</dd>
+      <dt>Horaire</dt><dd>${esc(courante.horaire)}</dd>
+      <dt>Lieu</dt><dd>${esc(courante.lieu)}</dd>
+      <dt>Prix</dt><dd>${euros(courante.prix)}</dd>`;
+    payer.textContent = `Payer ${euros(courante.prix)} et réserver`;
+    cgv.checked = false; payer.disabled = true; demo.hidden = true;
+    fen.showModal();
+  });
+  cgv.addEventListener("change", () => { payer.disabled = !cgv.checked; });
+  $("f-fermer").addEventListener("click", () => fen.close());
+  fen.addEventListener("click", e => { if (e.target === fen) fen.close(); });
+  payer.addEventListener("click", () => {
+    if (!courante.lien_paiement) { demo.hidden = false; return; }
+    window.location.href = courante.lien_paiement;
+  });
+})();
+</script>
+</body>
+</html>
